@@ -14,15 +14,24 @@ watchlist = ["AAPL", "AMZN", "AMD", "BA", "DIS", "DFS", "INTC", "FB", "GOOG"]
 listSize = len(watchlist)
 
 def setText():
+##    tempStr=""
+##    for i in watchlist:
+##        stockPrice = round(market.get_live_price(i), 2)
+##        tempStr += " " + i + ": $" + str(stockPrice) + " "
+##        print(tempStr) #for debugging
+##    setText.msg = tempStr
+    
+    setText.msg = setText.msg[1:] + setText.msg[0]
+    svar.set(setText.msg)
+    root.after(delay, setText)
+
+def updateText():
     tempStr=""
     for i in watchlist:
         stockPrice = round(market.get_live_price(i), 2)
         tempStr += " " + i + ": $" + str(stockPrice) + " "
-        print(tempStr) #for debugging
-    setText.msg = tempStr
-    setText.msg = setText.msg[1:] + setText.msg[0]
-    svar.set(setText.msg)
-    root.after(delay, setText)
+##        print(tempStr) #for debugging
+    return tempStr
 
 root = tk.Tk() # root is base of window
 root.iconbitmap("stock.ico") #sets window icon
@@ -37,7 +46,8 @@ fontStyle = tkFont.Font(family="Lucida Grande", size=11)
 label = tk.Label(root, textvariable = svar, height = 30, width=200, font=fontStyle, borderwidth=2, relief="groove") # creates label given params
 
 
-##setText.msg = "Example text here eeeeeeeeeeeeeeeeeeeeiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiieeeeeeee "
+##setText.msg = " AAPL: $318.89  AMZN: $2436.88  AMD: $55.17  BA: $137.53  DIS: $118.02  DFS: $40.47  INTC: $62.26  FB: $234.91  GOOG: $1410.42"
+setText.msg = updateText()
 setText() #this gets looped...
 label.pack()
 root.mainloop()
@@ -73,7 +83,7 @@ root.mainloop()
 ##fontStyle = tkFont.Font(family="Lucida Grande", size=11)
 ##label = tk.Label(root, textvariable = svar, height = 30, width=200, font=fontStyle, borderwidth=2, relief="groove") # creates label given params
 ##
-##setText.msg = "Example text here eeeeeeeeeeeeeeeeeeeeiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiieeeeeeee "
+##setText.msg = "AAPL: $318.89  AMZN: $2436.88  AMD: $55.17  BA: $137.53  DIS: $118.02  DFS: $40.47  INTC: $62.26  FB: $234.91  GOOG: $1410.42"
 ##setText()
 ##label.pack()
 ##root.mainloop()
